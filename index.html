@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AuvOS \\ PRE-ALPHA</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="bootScreen">
+    <div class="boot-logo">
+      <span></span><span></span><span></span><span></span>
+    </div>
+    <div class="boot-title">AuvOS</div>
+    <div class="boot-spinner"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <div id="bootStatus" class="boot-status"></div>
+  </div>
+  
+  <div id="desktopWrap" style="display:none;">
+    <div id="desktopIcons" class="desktop-icons"></div>
+    <div id="windowsLayer" class="windows-layer"></div>
+
+    <div id="desktopContextMenu" class="context-menu">
+      <button data-action="refresh">Refresh</button>
+      <button data-action="newfolder">New Folder</button>
+      <hr>
+      <button data-action="personalize">Personalize</button>
+    </div>
+  </div>
+  
+  <div id="startMenu" class="start-menu">
+    <div class="start-menu-search">
+      <input type="text" id="startSearch" placeholder="Type to search apps">
+    </div>
+    <div class="start-menu-label">All apps</div>
+    <div id="startMenuApps" class="start-menu-apps"></div>
+  </div>
+  
+  <div id="taskbar" style="display:none;">
+    <button id="startButton" class="start-button">
+      <span class="start-glyph"><i></i><i></i><i></i><i></i></span>
+    </button>
+    <div id="taskbarApps" class="taskbar-apps"></div>
+    <div class="system-tray">
+      <div id="clock" class="clock"></div>
+    </div>
+  </div>
+
+ <!--order matters-->
+  <script src="js/registry.js"></script>
+  <script src="js/theme.js"></script>
+  <script src="js/fs.js"></script>
+  <script src="js/windowManager.js"></script>
+
+  <script src="js/apps/explorer.js"></script>
+  <script src="js/apps/notepad.js"></script>
+  <script src="js/apps/terminal.js"></script>
+  <script src="js/apps/calculator.js"></script>
+  <script src="js/apps/sc16.js"></script>
+  <script src="js/apps/settings.js"></script>
+  <script src="js/apps/about.js"></script>
+
+  <script src="js/desktop.js"></script>
+  <script src="js/taskbar.js"></script>
+  <script src="js/boot.js"></script>
+</body>
+</html>
