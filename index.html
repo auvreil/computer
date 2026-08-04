@@ -21,17 +21,25 @@
     const terminal = new ScratchTerminal(canvas);
 
     const computer = new ScratchComputer((char) => terminal.write(char));
-    const customOperatingSystemOS = new Uint8Array([
-        0xB8, 0xF8, 0x03,       // MOV DX, 0x3F8 (Set hardware target port to Serial COM1)
-        0xB8, 0x48, 0x00, 0xEE, // MOV AX, 0x0048 ('H'), OUT DX, AL
-        0xB8, 0x49, 0x00, 0xEE, // MOV AX, 0x0049 ('I'), OUT DX, AL
-        0xB8, 0x0A, 0x00, 0xEE, // MOV AX, 0x000A ('\n'), OUT DX, AL
-        
-        // os command line keyboard read loop:
-        0xEC,                   // IN AL, DX (Read key buffer register 0x3F8)
-        0xEE,                   // OUT DX, AL (Echo back character directly to output stream)
-        0xF4                    // HLT
-    ]);
+const customOperatingSystemOS = new Uint8Array([
+    0xBA, 0xF8, 0x03,     
+
+    0xB8, 0x48, 0x00,       
+    0xEE,                   
+    0xB8, 0x49, 0x00,       
+    0xEE,                  
+
+    0xB8, 0x3E, 0x00,      
+    0xEE,                  
+
+    0xEC,                 
+    0xEE,                  
+    
+    
+    0xB8, 0x11, 0x00,       
+    0xEB, 0xF9              
+]);
+
     computer.loadBios(customOperatingSystemOS, 0x0000);
   
     window.addEventListener('keypress', (e) => {
