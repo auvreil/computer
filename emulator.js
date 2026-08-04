@@ -44,37 +44,51 @@ export class ScratchComputer {
         this.registers.IP++;
 
 
-        switch (opcode) {
-            case 0x90:
-                break;
+      switch (opcode) {
+    case 0x90: 
+        break;
 
-            case 0xB8: 
-                let low = this.ram[(this.registers.CS << 4) + this.registers.IP++];
-                let high = this.ram[(this.registers.CS << 4) + this.registers.IP++];
-                this.registers.AX = (high << 8) | low;
-                break;
+    case 0xB8: 
+        let alow = this.ram[(this.registers.CS << 4) + this.registers.IP++];
+        let ahigh = this.ram[(this.registers.CS << 4) + this.registers.IP++];
+        this.registers.AX = (ahigh << 8) | alow;
+        break;
 
-            case 0xEE: 
-                if (this.registers.DX === 0x3F8) { 
-                    this.uartWrite(this.registers.AX & 0xFF);
-                }
-                break;
+    case 0xBA: 
+        let dlow = this.ram[(this.registers.CS << 4) + this.registers.IP++];
+        let dhigh = this.ram[(this.registers.CS << 4) + this.registers.IP++];
+        this.registers.DX = (dhigh << 8) | dlow;
+        break;
 
-            case 0xEC: 
-                if (this.registers.DX === 0x3F8) {
-                    this.registers.AX = (this.registers.AX & 0xFF00) | this.ram[0x0400];
-                    this.ram[0x0400] = 0; 
-                }
-                break;
-
-            case 0xF4: 
-                this.halted = true;
-                console.log("cpu entered halted state.");
-                break;
-
-            default:
-                break;
+    case 0xEE: 
+        if (this.registers.DX === 0x3F8) { 
+            this.uartWrite(this.registers.AX & 0xFF);
         }
+        break;
+
+    case 0xEC: 
+        if (this.registers.DX === 0x3F8) {
+            let keyByte = this.ram[0x0400];
+            this.registers.AX = (this.registers.AX & 0xFF00) | keyByte;
+            
+            if (keyByte === 0) {
+    
+                this.registers.IP--; 
+            } else {
+                this.ram[0x0400] = 0; 
+            }
+        }
+        break;
+
+    case 0xF4: // HLT
+        this.halted = true;
+        console.log("CPU entered Halted State.");
+        break;
+
+    default:
+        break;
+}
+
     }
 
     run() {
