@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>auvreil/computer \\\\ pre-alpha</title>
+    <style>
+        body { background: #1a1a1a; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        canvas { border: 4px solid #333; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+    </style>
+</head>
+<body>
+
+<canvas id="display"></canvas>
+
+<script type="module">
+    import { ScratchTerminal } from './terminal.js';
+    import { ScratchComputer } from './emulator.js';
+
+    const canvas = document.getElementById('display');
+    
+    const terminal = new ScratchTerminal(canvas);
+
+    const computer = new ScratchComputer((char) => terminal.write(char));
+    const customOperatingSystemOS = new Uint8Array([
+        0xB8, 0xF8, 0x03,       // MOV DX, 0x3F8 (Set hardware target port to Serial COM1)
+        0xB8, 0x48, 0x00, 0xEE, // MOV AX, 0x0048 ('H'), OUT DX, AL
+        0xB8, 0x49, 0x00, 0xEE, // MOV AX, 0x0049 ('I'), OUT DX, AL
+        0xB8, 0x0A, 0x00, 0xEE, // MOV AX, 0x000A ('\n'), OUT DX, AL
+        
+        // os command line keyboard read loop:
+        0xEC,                   // IN AL, DX (Read key buffer register 0x3F8)
+        0xEE,                   // OUT DX, AL (Echo back character directly to output stream)
+        0xF4                    // HLT
+    ]);
+    computer.loadBios(customOperatingSystemOS, 0x0000);
+  
+    window.addEventListener('keypress', (e) => {
+        computer.sendKey(e.key);
+    });
+
+
+    terminal.write("Initializing Core Processors...\r\n");
+    setTimeout(() => {
+        computer.run();
+    }, 1000);
+</script>
+</body>
+</html>
