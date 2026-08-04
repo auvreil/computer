@@ -2,74 +2,59 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Desktop Web OS</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AuvOS</title>
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body data-wallpaper="azure">
 
-  <div id="desktop">
-    
-    <div class="desktop-icons">
-      <div class="icon-item">📁 <span>File Explorer</span></div>
-      <div class="icon-item">📝 <span>Notepad</span></div>
-      <div class="icon-item">💻 <span>Terminal</span></div>
-      <div class="icon-item">🧮 <span>Calculator</span></div>
-      <div class="icon-item">🕹️ <span>SC-16 Emulator</span></div>
-      <div class="icon-item">⚙️ <span>Settings</span></div>
-      <div class="icon-item">📄 <span>Read Me.txt</span></div>
-    </div>
-
-    <div class="window">
-      <div class="window-header">
-        <span class="window-title">Read Me.txt - Notepad</span>
-        <div class="window-controls">
-          <button>-</button>
-          <button>□</button>
-          <button class="close-btn">×</button>
-        </div>
-      </div>
-      <div class="window-menu-bar">
-        <button>New</button>
-        <button>Save</button>
-        <button>Save As...</button>
-        <span class="file-path">Opened /Desktop/Read Me.txt</span>
-      </div>
-      <div class="window-body">
-        <textarea readonly>This whole computer. The desktop, the windows, the file system, the apps.. are a static website. Everything you create is saved to your browser's local storage.
-
-Try:
-- Double-click an icon to open it
-- Right-click the desktop for options
-- Open Terminal and type "help"
-- Open SC-16 Emulator to program a tiny 16-bit CPU</textarea>
-      </div>
-    </div>
-
+  <div id="bootScreen">
+    <div class="boot-logo">&#128421;</div>
+    <div class="boot-title">AuvOS</div>
+    <div id="bootStatus" class="boot-status">Starting&hellip;</div>
   </div>
 
-  <div class="taskbar">
-    <div class="taskbar-left">
-      <button class="taskbar-btn">Personalize</button>
-      <input type="text" class="search-input" placeholder="Type to search apps...">
-    </div>
-
-    <div class="taskbar-apps">
-      <button class="taskbar-btn">📁 File Explorer</button>
-      <button class="taskbar-btn active">📝 Notepad</button>
-      <button class="taskbar-btn">💻 Terminal</button>
-      <button class="taskbar-btn">🧮 Calculator</button>
-      <button class="taskbar-btn">🕹️ SC-16 Emulator</button>
-      <button class="taskbar-btn">⚙️ Settings</button>
-      <button class="taskbar-btn">ℹ️ About This PC</button>
-    </div>
-
-    <div class="system-tray">
-      <div>
-        <div>01:00 PM</div>
-        <div>8/4/2026</div>
-      </div>
-    </div>
+  
+  <div id="desktopWrap" style="display:none">
+    <div id="desktopIcons" class="desktop-icons"></div>
+    <div id="windowsLayer"></div>
   </div>
 
+
+  <div id="desktopContextMenu" class="context-menu">
+    <button data-action="refresh">Refresh</button>
+    <button data-action="newfolder">New Folder</button>
+    <button data-action="personalize">Personalize</button>
+  </div>
+
+
+  <div id="taskbar" class="taskbar" style="display:none">
+    <button id="startButton" class="start-btn" title="Start">&#9776;</button>
+    <div id="taskbarApps" class="taskbar-apps"></div>
+    <div id="clock" class="clock"></div>
+  </div>
+
+  <div id="startMenu" class="start-menu">
+    <input id="startSearch" class="start-search" type="text" placeholder="Search apps&hellip;" spellcheck="false">
+    <div id="startMenuApps" class="start-menu-apps"></div>
+  </div>
+
+  <script src="js/registry.js"></script>
+  <script src="js/theme.js"></script>
+  <script src="js/fs.js"></script>
+  <script src="js/windowManager.js"></script>
+  <script src="js/desktop.js"></script>
+  <script src="js/taskbar.js"></script>
+  
+  <script src="js/apps/about.js"></script>
+  <script src="js/apps/calculator.js"></script>
+  <script src="js/apps/explorer.js"></script>
+  <script src="js/apps/notepad.js"></script>
+  <script src="js/apps/sc16.js"></script>
+  <script src="js/apps/settings.js"></script>
+  <script src="js/apps/terminal.js"></script>
+
+
+  <script src="js/boot.js"></script>
 </body>
 </html>
